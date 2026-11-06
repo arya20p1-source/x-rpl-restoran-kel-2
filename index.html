@@ -11,40 +11,53 @@
     <header class="page-header">
       <p class="eyebrow">Kelompok 2</p>
       <h1>Daftar Makanan Favorit</h1>
-      <p class="intro">Lima makanan pilihan yang paling kami sukai.</p>
+      <p class="intro">Tambahkan nama dan makanan favoritmu ke dalam daftar.</p>
     </header>
+
+    <form class="food-form" id="food-form">
+      <div class="form-field">
+        <label for="person-name">Nama</label>
+        <input id="person-name" name="personName" type="text" placeholder="Contoh: Dina" required>
+      </div>
+      <div class="form-field">
+        <label for="favorite-food">Makanan favorit</label>
+        <input id="favorite-food" name="favoriteFood" type="text" placeholder="Contoh: Nasi goreng" required>
+      </div>
+      <button type="submit">Tambahkan ke daftar</button>
+    </form>
+    <p class="form-message" id="form-message" role="status" aria-live="polite"></p>
 
     <ul class="food-list">
       <li class="food-card">
-        <img src="https://www.kompas.com/food/read/2021/02/22/130200475/resep-tahu-tek-surabaya-wajib-ada-petis-pada-bumbu-kacangnya&amp;fit=crop&amp;w=900&amp;q=85" alt="Hidangan dengan sayuran dan saus sebagai ilustrasi tahu tek" loading="lazy">
+        <img src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&amp;fit=crop&amp;w=900&amp;q=85" alt="Ilustrasi makanan favorit Abi" loading="lazy">
         <div class="food-info">
           <span class="person">Abi</span>
           <h2>Tahu tek</h2>
         </div>
       </li>
       <li class="food-card">
-        <img src="https://www.kompas.com/food/read/2021/02/22/130200475/resep-ayam-goreng-renyah&amp;fit=crop&amp;w=900&amp;q=85" alt="Ayam goreng renyah" loading="lazy">
+        <img src="https://images.unsplash.com/photo-1626645738196-c2a7c87a8f58?auto=format&amp;fit=crop&amp;w=900&amp;q=85" alt="Ayam goreng" loading="lazy">
         <div class="food-info">
           <span class="person">Arya</span>
           <h2>Ayam goreng</h2>
         </div>
       </li>
       <li class="food-card">
-        <img src="https://www.kompas.com/food/read/2021/02/22/130200475/resep-bebek-goreng&amp;fit=crop&amp;w=900&amp;q=85" alt="Hidangan bebek goreng" loading="lazy">
+        <img src="https://images.unsplash.com/photo-1626082927389-6cd097cdc6ec?auto=format&amp;fit=crop&amp;w=900&amp;q=85" alt="Hidangan goreng sebagai ilustrasi bebek goreng" loading="lazy">
         <div class="food-info">
           <span class="person">Vino</span>
           <h2>Bebek goreng</h2>
         </div>
       </li>
       <li class="food-card">
-        <img src="https://www.kompas.com/food/read/2021/02/22/130200475/resep-bubur-ayam&amp;fit=crop&amp;w=900&amp;q=85" alt="Semangkuk makanan hangat sebagai ilustrasi bubur ayam" loading="lazy">
+        <img src="https://images.unsplash.com/photo-1547592166-23ac45744acd?auto=format&amp;fit=crop&amp;w=900&amp;q=85" alt="Semangkuk makanan sebagai ilustrasi bubur ayam" loading="lazy">
         <div class="food-info">
           <span class="person">Orlando</span>
           <h2>Bubur ayam</h2>
         </div>
       </li>
       <li class="food-card">
-        <img src="https://www.kompas.com/food/read/2021/02/22/130200475/resep-mi-ayam&amp;fit=crop&amp;w=900&amp;q=85" alt="Semangkuk mi dengan sayuran" loading="lazy">
+        <img src="https://images.unsplash.com/photo-1569718212165-3a8278d5f624?auto=format&amp;fit=crop&amp;w=900&amp;q=85" alt="Semangkuk mi" loading="lazy">
         <div class="food-info">
           <span class="person">Rifat</span>
           <h2>Mi ayam</h2>
@@ -52,5 +65,50 @@
       </li>
     </ul>
   </main>
+  <script>
+    const form = document.querySelector("#food-form");
+    const nameInput = document.querySelector("#person-name");
+    const foodInput = document.querySelector("#favorite-food");
+    const foodList = document.querySelector(".food-list");
+    const formMessage = document.querySelector("#form-message");
+    const illustrationUrl = "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=900&q=85";
+
+    form.addEventListener("submit", (event) => {
+      event.preventDefault();
+
+      const personName = nameInput.value.trim();
+      const favoriteFood = foodInput.value.trim();
+
+      if (!personName || !favoriteFood) {
+        formMessage.textContent = "Nama dan makanan favorit harus diisi.";
+        return;
+      }
+
+      const card = document.createElement("li");
+      card.className = "food-card";
+
+      const image = document.createElement("img");
+      image.src = illustrationUrl;
+      image.alt = `Ilustrasi makanan favorit ${personName}`;
+      image.loading = "lazy";
+
+      const info = document.createElement("div");
+      info.className = "food-info";
+
+      const person = document.createElement("span");
+      person.className = "person";
+      person.textContent = personName;
+
+      const food = document.createElement("h2");
+      food.textContent = favoriteFood;
+
+      info.append(person, food);
+      card.append(image, info);
+      foodList.append(card);
+      form.reset();
+      formMessage.textContent = `${personName} dan ${favoriteFood} berhasil ditambahkan!`;
+      nameInput.focus();
+    });
+  </script>
 </body>
 </html>
